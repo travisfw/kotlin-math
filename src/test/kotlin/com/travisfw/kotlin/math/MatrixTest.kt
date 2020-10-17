@@ -225,7 +225,7 @@ class MatrixTest {
     )
   }
 
-  @Test
+  @Test @Ignore("https://github.com/romainguy/kotlin-math/issues/27")
   fun `rotation axis angle`() {
     assertArrayEquals(
         Mat4(
