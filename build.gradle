@@ -1,20 +1,22 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.4.10"
+  id "org.jetbrains.kotlin.jvm" version "1.4.10"
 }
 
 apply plugin: 'idea'
 apply plugin: 'kotlin'
 
 repositories {
-    jcenter()
+  jcenter()
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
-    testImplementation 'junit:junit:4.12'
+  implementation name: "kotlin-stdlib",
+      group: "org.jetbrains.kotlin", version: "$kotlinVersion"
+
+  testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+  testImplementation 'junit:junit:4.12'
 }
 
 sourceSets {
-    main.kotlin.srcDirs += 'src/main/kotlin'
+  main.kotlin.srcDirs += 'src/main/kotlin'
 }
