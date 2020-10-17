@@ -16,15 +16,15 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package com.curiouscreature.kotlin.math
+package com.travisfw.kotlin.math
 
-const val PI          = 3.1415926536f
+const val PI          = 3.141_592_6536f
 const val HALF_PI     = PI * 0.5f
-const val TWO_PI      = PI * 2.0f
-const val FOUR_PI     = PI * 4.0f
-const val INV_PI      = 1.0f / PI
-const val INV_TWO_PI  = INV_PI * 0.5f
-const val INV_FOUR_PI = INV_PI * 0.25f
+const val TAU         = 6.283_185_3072f
+const val TWO_TAU     = TAU * 2f
+const val INV_PI      = 1f / PI
+const val INV_TAU     = 1f / TAU
+const val INV_TWO_TAU = 1f / TWO_TAU
 
 inline fun clamp(x: Float, min: Float, max: Float)= if (x < min) min else (if (x > max) max else x)
 

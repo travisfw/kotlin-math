@@ -16,7 +16,7 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package com.curiouscreature.kotlin.math
+package com.travisfw.kotlin.math
 
 import kotlin.math.abs
 import kotlin.math.max
@@ -29,50 +29,26 @@ enum class VectorComponent {
     S, T, P, Q
 }
 
-data class Float2(var x: Float = 0.0f, var y: Float = 0.0f) {
+data class Float2(val x: Float = 0.0f, val y: Float = 0.0f) {
     constructor(v: Float) : this(v, v)
     constructor(v: Float2) : this(v.x, v.y)
 
-    inline var r: Float
+    inline val r: Float
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var g: Float
+    inline val g: Float
         get() = y
-        set(value) {
-            y = value
-        }
 
-    inline var s: Float
+    inline val s: Float
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var t: Float
+    inline val t: Float
         get() = y
-        set(value) {
-            y = value
-        }
 
-    inline var xy: Float2
+    inline val xy: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var rg: Float2
+    inline val rg: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var st: Float2
+    inline val st: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
 
     operator fun get(index: VectorComponent) = when (index) {
         VectorComponent.X, VectorComponent.R, VectorComponent.S -> x
@@ -94,39 +70,13 @@ data class Float2(var x: Float = 0.0f, var y: Float = 0.0f) {
 
     inline operator fun invoke(index: Int) = get(index - 1)
 
-    operator fun set(index: Int, v: Float) = when (index) {
-        0 -> x = v
-        1 -> y = v
-        else -> throw IllegalArgumentException("index must be in 0..1")
-    }
-
-    operator fun set(index1: Int, index2: Int, v: Float) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index: VectorComponent, v: Float) = when (index) {
-        VectorComponent.X, VectorComponent.R, VectorComponent.S -> x = v
-        VectorComponent.Y, VectorComponent.G, VectorComponent.T -> y = v
-        else -> throw IllegalArgumentException("index must be X, Y, R, G, S or T")
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, v: Float) {
-        set(index1, v)
-        set(index2, v)
-    }
-
     operator fun unaryMinus() = Float2(-x, -y)
     operator fun inc(): Float2 {
-        x += 1.0f
-        y += 1.0f
-        return this
+        return Float2(x+1f, y+1f)
     }
 
     operator fun dec(): Float2 {
-        x -= 1.0f
-        y -= 1.0f
-        return this
+        return Float2(x-1f, y-1f)
     }
 
     inline operator fun plus(v: Float) = Float2(x + v, y + v)
@@ -140,89 +90,42 @@ data class Float2(var x: Float = 0.0f, var y: Float = 0.0f) {
     inline operator fun div(v: Float2) = Float2(x / v.x, y / v.y)
 
     inline fun transform(block: (Float) -> Float): Float2 {
-        x = block(x)
-        y = block(y)
-        return this
+        return Float2(block(x), block(y))
     }
 }
 
-data class Float3(var x: Float = 0.0f, var y: Float = 0.0f, var z: Float = 0.0f) {
+data class Float3(val x: Float = 0f, val y: Float = 0f, val z: Float = 0f) {
     constructor(v: Float) : this(v, v, v)
-    constructor(v: Float2, z: Float = 0.0f) : this(v.x, v.y, z)
+    constructor(v: Float2, z: Float = 0f) : this(v.x, v.y, z)
     constructor(v: Float3) : this(v.x, v.y, v.z)
 
-    inline var r: Float
+    inline val r: Float
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var g: Float
+    inline val g: Float
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var b: Float
+    inline val b: Float
         get() = z
-        set(value) {
-            z = value
-        }
 
-    inline var s: Float
+    inline val s: Float
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var t: Float
+    inline val t: Float
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var p: Float
+    inline val p: Float
         get() = z
-        set(value) {
-            z = value
-        }
 
-    inline var xy: Float2
+    inline val xy: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var rg: Float2
+    inline val rg: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var st: Float2
+    inline val st: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
 
-    inline var rgb: Float3
+    inline val rgb: Float3
         get() = Float3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var xyz: Float3
+    inline val xyz: Float3
         get() = Float3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var stp: Float3
+    inline val stp: Float3
         get() = Float3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
 
     operator fun get(index: VectorComponent) = when (index) {
         VectorComponent.X, VectorComponent.R, VectorComponent.S -> x
@@ -253,59 +156,13 @@ data class Float3(var x: Float = 0.0f, var y: Float = 0.0f, var z: Float = 0.0f)
 
     inline operator fun invoke(index: Int) = get(index - 1)
 
-    operator fun set(index: Int, v: Float) = when (index) {
-        0 -> x = v
-        1 -> y = v
-        2 -> z = v
-        else -> throw IllegalArgumentException("index must be in 0..2")
-    }
-
-    operator fun set(index1: Int, index2: Int, v: Float) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index1: Int, index2: Int, index3: Int, v: Float) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
-
-    operator fun set(index: VectorComponent, v: Float) = when (index) {
-        VectorComponent.X, VectorComponent.R, VectorComponent.S -> x = v
-        VectorComponent.Y, VectorComponent.G, VectorComponent.T -> y = v
-        VectorComponent.Z, VectorComponent.B, VectorComponent.P -> z = v
-        else -> throw IllegalArgumentException("index must be X, Y, Z, R, G, B, S, T or P")
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, v: Float) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(
-            index1: VectorComponent,
-            index2: VectorComponent,
-            index3: VectorComponent,
-            v: Float) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
-
     operator fun unaryMinus() = Float3(-x, -y, -z)
     operator fun inc(): Float3 {
-        x += 1.0f
-        y += 1.0f
-        z += 1.0f
-        return this
+        return Float3(x+1f, y+1f, z+1f)
     }
 
     operator fun dec(): Float3 {
-        x -= 1.0f
-        y -= 1.0f
-        z -= 1.0f
-        return this
+        return Float3(x-1f, y-1f, z-1f)
     }
 
     inline operator fun plus(v: Float) = Float3(x + v, y + v, z + v)
@@ -324,130 +181,58 @@ data class Float3(var x: Float = 0.0f, var y: Float = 0.0f, var z: Float = 0.0f)
     inline operator fun div(v: Float3) = Float3(x / v.x, y / v.y, z / v.z)
 
     inline fun transform(block: (Float) -> Float): Float3 {
-        x = block(x)
-        y = block(y)
-        z = block(z)
-        return this
+        return Float3(block(x), block(y), block(z))
     }
 }
 
 data class Float4(
-        var x: Float = 0.0f,
-        var y: Float = 0.0f,
-        var z: Float = 0.0f,
-        var w: Float = 0.0f) {
+        val x: Float = 0f,
+        val y: Float = 0f,
+        val z: Float = 0f,
+        val w: Float = 0f) {
     constructor(v: Float) : this(v, v, v, v)
     constructor(v: Float2, z: Float = 0.0f, w: Float = 0.0f) : this(v.x, v.y, z, w)
     constructor(v: Float3, w: Float = 0.0f) : this(v.x, v.y, v.z, w)
     constructor(v: Float4) : this(v.x, v.y, v.z, v.w)
 
-    inline var r: Float
+    inline val r: Float
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var g: Float
+    inline val g: Float
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var b: Float
+    inline val b: Float
         get() = z
-        set(value) {
-            z = value
-        }
-    inline var a: Float
+    inline val a: Float
         get() = w
-        set(value) {
-            w = value
-        }
 
-    inline var s: Float
+    inline val s: Float
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var t: Float
+    inline val t: Float
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var p: Float
+    inline val p: Float
         get() = z
-        set(value) {
-            z = value
-        }
-    inline var q: Float
+    inline val q: Float
         get() = w
-        set(value) {
-            w = value
-        }
 
-    inline var xy: Float2
+    inline val xy: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var rg: Float2
+    inline val rg: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var st: Float2
+    inline val st: Float2
         get() = Float2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
 
-    inline var rgb: Float3
+    inline val rgb: Float3
         get() = Float3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var xyz: Float3
+    inline val xyz: Float3
         get() = Float3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var stp: Float3
+    inline val stp: Float3
         get() = Float3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
 
-    inline var rgba: Float4
+    inline val rgba: Float4
         get() = Float4(x, y, z, w)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-            w = value.w
-        }
-    inline var xyzw: Float4
+    inline val xyzw: Float4
         get() = Float4(x, y, z, w)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-            w = value.w
-        }
-    inline var stpq: Float4
+    inline val stpq: Float4
         get() = Float4(x, y, z, w)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-            w = value.w
-        }
 
     operator fun get(index: VectorComponent) = when (index) {
         VectorComponent.X, VectorComponent.R, VectorComponent.S -> x
@@ -491,74 +276,13 @@ data class Float4(
 
     inline operator fun invoke(index: Int) = get(index - 1)
 
-    operator fun set(index: Int, v: Float) = when (index) {
-        0 -> x = v
-        1 -> y = v
-        2 -> z = v
-        3 -> w = v
-        else -> throw IllegalArgumentException("index must be in 0..3")
-    }
-
-    operator fun set(index1: Int, index2: Int, v: Float) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index1: Int, index2: Int, index3: Int, v: Float) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
-
-    operator fun set(index1: Int, index2: Int, index3: Int, index4: Int, v: Float) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-        set(index4, v)
-    }
-
-    operator fun set(index: VectorComponent, v: Float) = when (index) {
-        VectorComponent.X, VectorComponent.R, VectorComponent.S -> x = v
-        VectorComponent.Y, VectorComponent.G, VectorComponent.T -> y = v
-        VectorComponent.Z, VectorComponent.B, VectorComponent.P -> z = v
-        VectorComponent.W, VectorComponent.A, VectorComponent.Q -> w = v
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, v: Float) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, index3: VectorComponent,
-            v: Float) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent,
-            index3: VectorComponent, index4: VectorComponent, v: Float) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-        set(index4, v)
-    }
-
     operator fun unaryMinus() = Float4(-x, -y, -z, -w)
     operator fun inc(): Float4 {
-        x += 1.0f
-        y += 1.0f
-        z += 1.0f
-        w += 1.0f
-        return this
+        return Float4(x+1f, y+1f, z+1f, w+1f)
     }
 
     operator fun dec(): Float4 {
-        x -= 1.0f
-        y -= 1.0f
-        z -= 1.0f
-        w -= 1.0f
-        return this
+        return Float4(x-1f, y-1f, z-1f, w-1f)
     }
 
     inline operator fun plus(v: Float) = Float4(x + v, y + v, z + v, w + v)
@@ -582,11 +306,7 @@ data class Float4(
     inline operator fun div(v: Float4) = Float4(x / v.x, y / v.y, z / v.z, w / v.w)
 
     inline fun transform(block: (Float) -> Float): Float4 {
-        x = block(x)
-        y = block(y)
-        z = block(z)
-        w = block(w)
-        return this
+        return Float4(block(x), block(y), block(z), block(w))
     }
 }
 
@@ -851,49 +571,25 @@ inline infix fun Float4.neq(b: Float4) = Bool4(x != b.x, y != b.y, z != b.z, w !
 inline fun any(v: Bool4) = v.x || v.y || v.z || v.w
 inline fun all(v: Bool4) = v.x && v.y && v.z && v.w
 
-data class Bool2(var x: Boolean = false, var y: Boolean = false) {
+data class Bool2(val x: Boolean = false, val y: Boolean = false) {
     constructor(v: Bool2) : this(v.x, v.y)
 
-    inline var r: Boolean
+    inline val r: Boolean
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var g: Boolean
+    inline val g: Boolean
         get() = y
-        set(value) {
-            y = value
-        }
 
-    inline var s: Boolean
+    inline val s: Boolean
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var t: Boolean
+    inline val t: Boolean
         get() = y
-        set(value) {
-            y = value
-        }
 
-    inline var xy: Bool2
+    inline val xy: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var rg: Bool2
+    inline val rg: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var st: Bool2
+    inline val st: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
 
     operator fun get(index: VectorComponent) = when (index) {
         VectorComponent.X, VectorComponent.R, VectorComponent.S -> x
@@ -914,106 +610,39 @@ data class Bool2(var x: Boolean = false, var y: Boolean = false) {
     operator fun get(index1: Int, index2: Int) = Bool2(get(index1), get(index2))
 
     inline operator fun invoke(index: Int) = get(index - 1)
-
-    operator fun set(index: Int, v: Boolean) = when (index) {
-        0 -> x = v
-        1 -> y = v
-        else -> throw IllegalArgumentException("index must be in 0..1")
-    }
-
-    operator fun set(index1: Int, index2: Int, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index: VectorComponent, v: Boolean) = when (index) {
-        VectorComponent.X, VectorComponent.R, VectorComponent.S -> x = v
-        VectorComponent.Y, VectorComponent.G, VectorComponent.T -> y = v
-        else -> throw IllegalArgumentException("index must be X, Y, R, G, S or T")
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-    }
 }
 
-data class Bool3(var x: Boolean = false, var y: Boolean = false, var z: Boolean = false) {
+data class Bool3(val x: Boolean = false, val y: Boolean = false, val z: Boolean = false) {
     constructor(v: Bool2, z: Boolean = false) : this(v.x, v.y, z)
     constructor(v: Bool3) : this(v.x, v.y, v.z)
 
-    inline var r: Boolean
+    inline val r: Boolean
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var g: Boolean
+    inline val g: Boolean
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var b: Boolean
+    inline val b: Boolean
         get() = z
-        set(value) {
-            z = value
-        }
 
-    inline var s: Boolean
+    inline val s: Boolean
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var t: Boolean
+    inline val t: Boolean
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var p: Boolean
+    inline val p: Boolean
         get() = z
-        set(value) {
-            z = value
-        }
 
-    inline var xy: Bool2
+    inline val xy: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var rg: Bool2
+    inline val rg: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var st: Bool2
+    inline val st: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
 
-    inline var rgb: Bool3
+    inline val rgb: Bool3
         get() = Bool3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var xyz: Bool3
+    inline val xyz: Bool3
         get() = Bool3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var stp: Bool3
+    inline val stp: Bool3
         get() = Bool3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
 
     operator fun get(index: VectorComponent) = when (index) {
         VectorComponent.X, VectorComponent.R, VectorComponent.S -> x
@@ -1044,163 +673,55 @@ data class Bool3(var x: Boolean = false, var y: Boolean = false, var z: Boolean 
 
     inline operator fun invoke(index: Int) = get(index - 1)
 
-    operator fun set(index: Int, v: Boolean) = when (index) {
-        0 -> x = v
-        1 -> y = v
-        2 -> z = v
-        else -> throw IllegalArgumentException("index must be in 0..2")
-    }
-
-    operator fun set(index1: Int, index2: Int, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index1: Int, index2: Int, index3: Int, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
-
-    operator fun set(index: VectorComponent, v: Boolean) = when (index) {
-        VectorComponent.X, VectorComponent.R, VectorComponent.S -> x = v
-        VectorComponent.Y, VectorComponent.G, VectorComponent.T -> y = v
-        VectorComponent.Z, VectorComponent.B, VectorComponent.P -> z = v
-        else -> throw IllegalArgumentException("index must be X, Y, Z, R, G, B, S, T or P")
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(
-            index1: VectorComponent,
-            index2: VectorComponent,
-            index3: VectorComponent,
-            v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
 }
 
 data class Bool4(
-        var x: Boolean = false,
-        var y: Boolean = false,
-        var z: Boolean = false,
-        var w: Boolean = false) {
+        val x: Boolean = false,
+        val y: Boolean = false,
+        val z: Boolean = false,
+        val w: Boolean = false) {
     constructor(v: Bool2, z: Boolean = false, w: Boolean = false) : this(v.x, v.y, z, w)
     constructor(v: Bool3, w: Boolean = false) : this(v.x, v.y, v.z, w)
     constructor(v: Bool4) : this(v.x, v.y, v.z, v.w)
 
-    inline var r: Boolean
+    inline val r: Boolean
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var g: Boolean
+    inline val g: Boolean
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var b: Boolean
+    inline val b: Boolean
         get() = z
-        set(value) {
-            z = value
-        }
-    inline var a: Boolean
+    inline val a: Boolean
         get() = w
-        set(value) {
-            w = value
-        }
 
-    inline var s: Boolean
+    inline val s: Boolean
         get() = x
-        set(value) {
-            x = value
-        }
-    inline var t: Boolean
+    inline val t: Boolean
         get() = y
-        set(value) {
-            y = value
-        }
-    inline var p: Boolean
+    inline val p: Boolean
         get() = z
-        set(value) {
-            z = value
-        }
-    inline var q: Boolean
+    inline val q: Boolean
         get() = w
-        set(value) {
-            w = value
-        }
 
-    inline var xy: Bool2
+    inline val xy: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var rg: Bool2
+    inline val rg: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
-    inline var st: Bool2
+    inline val st: Bool2
         get() = Bool2(x, y)
-        set(value) {
-            x = value.x
-            y = value.y
-        }
 
-    inline var rgb: Bool3
+    inline val rgb: Bool3
         get() = Bool3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var xyz: Bool3
+    inline val xyz: Bool3
         get() = Bool3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
-    inline var stp: Bool3
+    inline val stp: Bool3
         get() = Bool3(x, y, z)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-        }
 
-    inline var rgba: Bool4
+    inline val rgba: Bool4
         get() = Bool4(x, y, z, w)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-            w = value.w
-        }
-    inline var xyzw: Bool4
+    inline val xyzw: Bool4
         get() = Bool4(x, y, z, w)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-            w = value.w
-        }
-    inline var stpq: Bool4
+    inline val stpq: Bool4
         get() = Bool4(x, y, z, w)
-        set(value) {
-            x = value.x
-            y = value.y
-            z = value.z
-            w = value.w
-        }
 
     operator fun get(index: VectorComponent) = when (index) {
         VectorComponent.X, VectorComponent.R, VectorComponent.S -> x
@@ -1244,56 +765,4 @@ data class Bool4(
 
     inline operator fun invoke(index: Int) = get(index - 1)
 
-    operator fun set(index: Int, v: Boolean) = when (index) {
-        0 -> x = v
-        1 -> y = v
-        2 -> z = v
-        3 -> w = v
-        else -> throw IllegalArgumentException("index must be in 0..3")
-    }
-
-    operator fun set(index1: Int, index2: Int, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index1: Int, index2: Int, index3: Int, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
-
-    operator fun set(index1: Int, index2: Int, index3: Int, index4: Int, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-        set(index4, v)
-    }
-
-    operator fun set(index: VectorComponent, v: Boolean) = when (index) {
-        VectorComponent.X, VectorComponent.R, VectorComponent.S -> x = v
-        VectorComponent.Y, VectorComponent.G, VectorComponent.T -> y = v
-        VectorComponent.Z, VectorComponent.B, VectorComponent.P -> z = v
-        VectorComponent.W, VectorComponent.A, VectorComponent.Q -> w = v
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent, index3: VectorComponent,
-            v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-    }
-
-    operator fun set(index1: VectorComponent, index2: VectorComponent,
-            index3: VectorComponent, index4: VectorComponent, v: Boolean) {
-        set(index1, v)
-        set(index2, v)
-        set(index3, v)
-        set(index4, v)
-    }
 }

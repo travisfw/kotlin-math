@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.curiouscreature.kotlin.math
+package com.travisfw.kotlin.math
 
 data class Ray(var origin: Float3 = Float3(), var direction: Float3)
 
